@@ -1,0 +1,19 @@
+- en el cliente correrá un solo proceso y en el servidor 3 ( el primary server + el file service + el auth service)
+-los comandos introducidos los recibe el primary server, y segun que comando sea, redirecciona la petición a alguno de los otros 2 procesos
+-base de datos de usuarios: un archivo de texto plano con un formato determinado por mi ej: usuario/contraseña/bloqueado
+-los procesos deberán ser 3 binarios distintos
+-se corren los 3 binarios a la vez, (ipc)
+-desde el cliente, con ctrl - c debe enviar el comando exit al servidor antes de salir del programa. (implementar señales entre procesos)
+-recomendacion: cuando definamos una funcion que reciba por ejemplo, datos de usuarios como parametro, hacer que reciba una estructura, asi no   necesito modificar toda las declaraciones de las funciones.
+- usar define para tamaños de puertos, tamaños de buffer etc.
+-elegir un mecanismo de comunicacion entre los 3 procesos ( principal, autenticacion y manejo de archivos) ? ventajas/desventajas que tiene este mecanismo
+-se tiene que definir como van a intercambiar mensajes el file server con el cliente que quiere descargar el archivo, se crea un nuevo socket.
+-el cliente basicamente leerá datosa del socket que recibe y escribirlos en el pendrive. (se puede hacer por parte o todo junto)
+-la iso que enviamos al cliente debe tener tabla de particiones y todo eso. 
+- 3 procesos del lado del server tienen q estar constantemente corriendo.
+-auth service se comunica con el primary server y no con el cliente directamente, no asi el file server que abre socket nuevo.
+tener en cuenta portabilidad para raspberry, ¿no definir int sino unint_32?
+-para listar archivos y usuarios, el primary server  se los solicitará al file server y auth server y estos se los devolveran al primary server, y este se la envia al cliente.
+-  ver msgctl ¿?
+-ver ncat ¿? - netstat -an -ptcp | grep 8080
+-en el main de la funcion primary server por ejemplo haces fork + execv(auth_service) y fork + execv(file_service)

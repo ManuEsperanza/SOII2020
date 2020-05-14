@@ -1,0 +1,44 @@
+#Directorios
+BINARY_DIR=bin
+
+#Binarios
+CLIENT=client
+SERVER=server
+SERVER_AUTH=auth
+SERVER_FS=fileserv
+FUNCIONES=funciones
+
+CC=gcc
+CFLAGS=-std=gnu11  #-Wall -Werror -pedantic -Wextra -Wconversion -O1
+DEPS = funciones.h
+
+all : client server auth  
+.PHONY: all
+
+client: cliente.c funciones.h
+	mkdir -p $(BINARY_DIR)
+	$(CC) $(CFLAGS)  -o $(BINARY_DIR)/$(CLIENT).o -c cliente.c 
+	$(CC) $(CFLAGS)  -o $(BINARY_DIR)/$(CLIENT)   $(BINARY_DIR)/$(CLIENT).o
+
+server: priServer.c funciones.h
+	mkdir -p $(BINARY_DIR)
+	$(CC) $(CFLAGS)  -o $(BINARY_DIR)/$(SERVER).o -c priServer.c 
+	$(CC) $(CFLAGS)  -o $(BINARY_DIR)/$(SERVER)   $(BINARY_DIR)/$(SERVER).o	
+
+auth: authService.c funciones.c funciones.h
+	mkdir -p $(BINARY_DIR)
+	$(CC) $(CFLAGS)  -o $(BINARY_DIR)/$(SERVER_AUTH).o -c authService.c 
+	$(CC) $(CFLAGS)  -o $(BINARY_DIR)/$(FUNCIONES).o -c funciones.c 
+	$(CC) $(CFLAGS)  -o $(BINARY_DIR)/$(SERVER_AUTH)   $(BINARY_DIR)/$(SERVER_AUTH).o $(BINARY_DIR)/$(FUNCIONES).o
+
+fileserv: fileService.c funciones.h
+	mkdir -p $(BINARY_DIR)
+	$(CC) $(CFLAGS)  -o $(BINARY_DIR)/$(SERVER_FS).o -c fileService.c 
+	$(CC) $(CFLAGS)  -o $(BINARY_DIR)/$(SERVER_FS)   $(BINARY_DIR)/$(SERVER_FS).o
+
+#funciones: funciones.c funciones.h
+#	$(CC) $(CFLAGS)  -o $(BINARY_DIR)/$(FUNCIONES).o -c funciones.c
+
+.PHONY: clean
+clean :
+	rm  -Rf $(BINARY_DIR)

@@ -1,0 +1,6 @@
+falta:
+	reveer por que no funciona el comando exit. (no esta enviando la estructura al primary server cuando pongo exit en el cliente)
+	dirent.h es la clave para hacer files ls. //no llego para hoy
+para presentar:
+	-compilar con todas las banderas que piden
+	-borrar todos los printf que no son necesarios.
